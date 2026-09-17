@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: stg_subskribe__accounts
+    description: "Staged Subskribe accounts with standardized column names."
+
+    columns:
+      - name: account_id
+        description: "Unique identifier of the Subskribe account."
+        data_tests:
+          - not_null
+          - unique
+
+      - name: company_name
+        description: "Name of the company associated with the account."
+
+      - name: hubspot_company_id
+        description: "HubSpot company identifier associated with the Subskribe account."
+
+      - name: currency
+        description: "Currency associated with the account."
+
+      - name: created_date
+        description: "Date the account was created in Subskribe."
