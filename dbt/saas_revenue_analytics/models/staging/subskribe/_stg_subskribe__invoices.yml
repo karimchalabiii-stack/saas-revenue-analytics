@@ -1,0 +1,54 @@
+version: 2
+
+models:
+  - name: stg_subskribe__invoices
+    description: "Staged Subskribe invoices with standardized column names and monetary data types."
+
+    columns:
+      - name: invoice_id
+        description: "Unique identifier of the Subskribe invoice."
+        data_tests:
+          - not_null
+          - unique
+
+      - name: account_id
+        description: "Identifier of the Subskribe account associated with the invoice."
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_subskribe__accounts')
+                field: account_id
+
+      - name: subscription_id
+        description: "Identifier of the Subskribe subscription associated with the invoice."
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_subskribe__subscriptions')
+                field: subscription_id
+
+      - name: invoice_date
+        description: "Date of the invoice."
+
+      - name: total_amount
+        description: "Total invoice amount in the original currency."
+        data_tests:
+          - not_null
+
+      - name: total_amount_nzd
+        description: "Total invoice amount converted to NZD."
+        data_tests:
+          - not_null
+
+      - name: currency
+        description: "Original currency of the invoice."
+
+      - name: status
+        description: "Current status of the invoice."
+        data_tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - PAID
+                  - POSTED
+                  - VOIDED
