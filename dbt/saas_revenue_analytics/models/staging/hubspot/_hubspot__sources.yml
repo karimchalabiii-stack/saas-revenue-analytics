@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: hubspot
+    database: saas-revenue-analytics-507122
+    schema: raw
+
+    tables:
+      - name: companies
+        identifier: hubspot_companies

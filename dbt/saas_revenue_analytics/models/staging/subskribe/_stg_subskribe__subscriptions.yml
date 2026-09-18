@@ -1,0 +1,55 @@
+version: 2
+
+models:
+  - name: stg_subskribe__subscriptions
+    description: "Staged Subskribe subscriptions with standardized column names."
+
+    columns:
+      - name: subscription_id
+        description: "Unique identifier of the Subskribe subscription."
+        data_tests:
+          - not_null
+          - unique
+
+      - name: account_id
+        description: "Identifier of the Subskribe account associated with the subscription."
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_subskribe__accounts')
+                field: account_id
+
+      - name: subscription_state
+        description: "Current state of the subscription."
+        data_tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - ACTIVE
+                  - CANCELED
+                  - EXPIRED
+
+      - name: start_date
+        description: "Start date of the subscription."
+
+      - name: end_date
+        description: "End date of the subscription."
+        data_tests:
+          - not_null
+
+      - name: cancelled_date
+        description: "Cancellation date of the subscription, populated only for canceled subscriptions."
+
+      - name: renewed_from_subscription_id
+        description: "Identifier of the previous subscription from which this subscription was renewed."
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_subskribe__subscriptions')
+                field: subscription_id
+
+      - name: created_at
+        description: "Timestamp when the subscription was created."
+
+      - name: updated_at
+        description: "Timestamp when the subscription was last updated."

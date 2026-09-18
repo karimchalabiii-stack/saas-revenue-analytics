@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: stg_hubspot__companies
+    description: "Staged HubSpot companies with standardized column names."
+
+    columns:
+      - name: company_id
+        description: "Unique identifier of the HubSpot company."
+        data_tests:
+          - not_null
+          - unique
+
+      - name: company_name
+        description: "Name of the company."
+
+      - name: company_size
+        description: "Grouped company size."
+
+      - name: industry
+        description: "Industry associated with the company."
+
+      - name: country
+        description: "Country associated with the company."
+
+      - name: merged_old_company_ids
+        description: "Semicolon-separated list of old HubSpot company IDs that were merged into this company."
+
+      - name: created_date
+        description: "Date the company was created in HubSpot."

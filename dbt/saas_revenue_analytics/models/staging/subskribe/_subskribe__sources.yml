@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: subskribe
+    database: saas-revenue-analytics-507122
+    schema: raw
+
+    tables:
+      - name: accounts
+        identifier: subskribe_accounts
+
+      - name: subscriptions
+        identifier: subskribe_subscriptions
+
+      - name: invoices
+        identifier: subskribe_invoices
