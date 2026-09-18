@@ -42,6 +42,11 @@ models:
 
       - name: renewed_from_subscription_id
         description: "Identifier of the previous subscription from which this subscription was renewed."
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_subskribe__subscriptions')
+                field: subscription_id
 
       - name: created_at
         description: "Timestamp when the subscription was created."
