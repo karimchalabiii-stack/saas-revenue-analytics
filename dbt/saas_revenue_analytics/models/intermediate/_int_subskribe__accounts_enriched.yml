@@ -1,0 +1,55 @@
+version: 2
+
+models:
+  - name: int_subskribe__accounts_enriched
+    description: "Enriches Subskribe accounts with resolved HubSpot company identifiers and company attributes."
+
+    columns:
+      - name: account_id
+        description: "Unique identifier of the Subskribe account."
+        data_tests:
+          - not_null
+          - unique
+
+      - name: subskribe_company_name
+        description: "Company name provided by Subskribe."
+
+      - name: currency
+        description: "Currency associated with the Subskribe account."
+
+      - name: subskribe_created_date
+        description: "Date when the Subskribe account was created."
+
+      - name: hubspot_company_id
+        description: "Original HubSpot company identifier referenced by the Subskribe account."
+
+      - name: canonical_company_id
+        description: "Current canonical HubSpot company identifier after resolving merged company IDs."
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_hubspot__companies')
+                field: company_id
+
+      - name: mapping_type
+        description: "Method used to resolve the HubSpot company identifier."
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - direct
+                  - merged
+                  - unresolved
+
+      - name: hubspot_company_name
+        description: "Company name provided by HubSpot."
+
+      - name: company_size
+        description: "Company size provided by HubSpot."
+
+      - name: industry
+        description: "Company industry provided by HubSpot."
+
+      - name: country
+        description: "Company country provided by HubSpot."
