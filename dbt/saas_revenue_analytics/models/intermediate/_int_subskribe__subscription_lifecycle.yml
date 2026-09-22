@@ -1,0 +1,63 @@
+version: 2
+
+models:
+  - name: int_subskribe__subscription_lifecycle
+    description: "Enriches Subskribe subscriptions with renewal and lifecycle information."
+
+    columns:
+      - name: subscription_id
+        description: "Unique identifier of the subscription."
+        data_tests:
+          - not_null
+          - unique
+
+      - name: account_id
+        description: "Identifier of the Subskribe account associated with the subscription."
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_subskribe__accounts')
+                field: account_id
+
+      - name: subscription_state
+        description: "Current state of the subscription."
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - ACTIVE
+                  - CANCELED
+                  - EXPIRED
+
+      - name: start_date
+        description: "Start date of the subscription."
+        data_tests:
+          - not_null
+
+      - name: end_date
+        description: "End date of the subscription."
+        data_tests:
+          - not_null
+
+      - name: cancelled_date
+        description: "Date when the subscription was cancelled, when applicable."
+
+      - name: renewed_from_subscription_id
+        description: "Identifier of the previous subscription when the current subscription is a renewal."
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_subskribe__subscriptions')
+                field: subscription_id
+
+      - name: is_renewal
+        description: "Indicates whether the subscription is a renewal of a previous subscription."
+        data_tests:
+          - not_null
+
+      - name: lifecycle_start_date
+        description: "Start date of the first subscription in the account lifecycle."
+        data_tests:
+          - not_null
