@@ -1,0 +1,60 @@
+version: 2
+
+models:
+  - name: dim_customers
+    description: >
+      Customer dimension at the Subskribe account grain, enriched with HubSpot
+      company attributes and CRM identity resolution.
+
+    columns:
+      - name: customer_id
+        description: Unique customer identifier derived from the Subskribe account identifier.
+        data_tests:
+          - unique
+          - not_null
+
+      - name: hubspot_company_id
+        description: HubSpot company identifier originally referenced by the Subskribe account.
+
+      - name: hubspot_current_company_id
+        description: Current HubSpot company identifier after resolving merged company records.
+
+      - name: customer_name
+        description: Customer name used for analytics, prioritizing the HubSpot company name and falling back to the Subskribe company name.
+        data_tests:
+          - not_null
+
+      - name: hubspot_company_name
+        description: Company name from HubSpot.
+
+      - name: subskribe_company_name
+        description: Company name from Subskribe.
+        data_tests:
+          - not_null
+
+      - name: company_size
+        description: Customer company size category from HubSpot.
+
+      - name: industry
+        description: Customer industry from HubSpot.
+
+      - name: country
+        description: Customer country from HubSpot.
+
+      - name: currency
+        description: Billing currency associated with the Subskribe account.
+        data_tests:
+          - not_null
+
+      - name: subskribe_created_date
+        description: Date when the account was created in Subskribe.
+        data_tests:
+          - not_null
+
+      - name: mapping_type
+        description: Method used to resolve the Subskribe CRM identifier to a HubSpot company.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['direct', 'merged', 'unresolved']
