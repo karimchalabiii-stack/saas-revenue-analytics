@@ -1,0 +1,68 @@
+version: 2
+
+models:
+  - name: fct_invoices
+    description: >
+      Invoice fact table at the invoice grain, exposing billing amounts
+      and billed revenue for customer revenue analysis.
+
+    columns:
+      - name: invoice_id
+        description: Unique identifier of the invoice.
+        tests:
+          - unique
+          - not_null
+
+      - name: customer_id
+        description: Identifier of the customer associated with the invoice.
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_customers')
+                field: customer_id
+
+      - name: subscription_id
+        description: Identifier of the subscription associated with the invoice.
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('fct_subscriptions')
+                field: subscription_id
+
+      - name: invoice_date
+        description: Date on which the invoice was issued.
+        tests:
+          - not_null
+
+      - name: total_amount
+        description: Total invoice amount in the original billing currency.
+        tests:
+          - not_null
+
+      - name: total_amount_nzd
+        description: Total invoice amount converted to NZD.
+        tests:
+          - not_null
+
+      - name: currency
+        description: Original billing currency of the invoice.
+        tests:
+          - not_null
+
+      - name: status
+        description: Status of the invoice.
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['PAID', 'POSTED', 'VOIDED']
+
+      - name: billed_revenue_nzd
+        description: >
+          Invoice amount contributing to billed revenue in NZD.
+          PAID and POSTED invoices are included, while VOIDED invoices
+          contribute zero.
+        tests:
+          - not_null
