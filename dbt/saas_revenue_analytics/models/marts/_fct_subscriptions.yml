@@ -1,0 +1,64 @@
+version: 2
+
+models:
+  - name: fct_subscriptions
+    description: >
+      Subscription fact table at the subscription grain, exposing subscription
+      lifecycle and renewal information for customer retention and churn analysis.
+
+    columns:
+      - name: subscription_id
+        description: Unique identifier of the subscription.
+        tests:
+          - unique
+          - not_null
+
+      - name: customer_id
+        description: Identifier of the customer associated with the subscription.
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_customers')
+                field: customer_id
+
+      - name: subscription_state
+        description: Current state of the subscription.
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['ACTIVE', 'CANCELED', 'EXPIRED']
+
+      - name: start_date
+        description: Start date of the subscription.
+        tests:
+          - not_null
+
+      - name: end_date
+        description: End date of the subscription.
+        tests:
+          - not_null
+
+      - name: cancelled_date
+        description: >
+          Date on which the subscription was canceled. Null for subscriptions
+          that have not been canceled.
+
+      - name: renewed_from_subscription_id
+        description: >
+          Identifier of the previous subscription when the current subscription
+          is a renewal. Null for the initial subscription in a lifecycle.
+
+      - name: is_renewal
+        description: >
+          Indicates whether the subscription is a renewal of a previous subscription.
+        tests:
+          - not_null
+
+      - name: lifecycle_start_date
+        description: >
+          Start date of the customer's subscription lifecycle, corresponding to
+          the start date of the initial subscription in the renewal chain.
+        tests:
+          - not_null

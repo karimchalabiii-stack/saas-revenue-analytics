@@ -1,0 +1,45 @@
+version: 2
+
+models:
+  - name: dim_date
+    description: >
+      Calendar date dimension at the daily grain, dynamically generated from
+      the earliest to the latest relevant business dates in the source data
+      and extended to full calendar years.
+
+    columns:
+      - name: date
+        description: Calendar date.
+        tests:
+          - unique
+          - not_null
+
+      - name: year
+        description: Calendar year.
+
+      - name: quarter
+        description: Calendar quarter, from Q1 to Q4.
+
+      - name: month
+        description: Month number, from 1 to 12.
+
+      - name: month_name
+        description: Full month name.
+
+      - name: year_month
+        description: Calendar year and month formatted as YYYY-MM.
+
+      - name: week
+        description: ISO week number, from 1 to 53.
+
+      - name: year_week
+        description: ISO year and week formatted as YYYY-Www.
+
+      - name: day
+        description: Day of the month, from 1 to 31.
+
+      - name: day_of_week
+        description: ISO day of the week, where Monday is 1 and Sunday is 7.
+
+      - name: day_name
+        description: Full day name.
