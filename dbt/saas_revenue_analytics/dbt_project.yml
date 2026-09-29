@@ -26,7 +26,10 @@ models:
   saas_revenue_analytics:
     staging:
       +materialized: view
+      +schema: "{{ 'dbt_prod_technical' if target.name == 'prod' else none }}"
     intermediate:
       +materialized: view
+      +schema: "{{ 'dbt_prod_technical' if target.name == 'prod' else none }}"
     marts:
       +materialized: table
+      +schema: "{{ 'analytics' if target.name == 'prod' else none }}"
