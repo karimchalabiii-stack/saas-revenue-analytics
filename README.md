@@ -50,14 +50,14 @@ The project follows a layered analytics architecture with separate development, 
          DEVELOPMENT             CI                PRODUCTION
           dbt_karim            dbt_ci                   │
               │                  │                      │
-      stg / int / marts   stg / int / marts      ┌─────┴─────┐
-                                                  │           │
-                                                  ▼           ▼
-                                      dbt_prod_technical   analytics
-                                            stg / int        marts
-                                                               │
-                                                               ▼
-                                                            Power BI
+      stg / int / marts   stg / int / marts     ┌──────┴──────┐
+                                                │             │
+                                                ▼             ▼
+                                   dbt_prod_technical     analytics
+                                         stg / int          marts
+                                                             │
+                                                             ▼
+                                                          Power BI
 ```
 
 
