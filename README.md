@@ -38,26 +38,26 @@ The project follows a layered analytics architecture with separate development, 
                                  ▼
                         ┌─────────────────┐
                         │  BigQuery RAW   │
-                        │      raw        │
+                        │       raw       │
                         └────────┬────────┘
                                  │
                                  ▼
-                               dbt
+                                dbt
                                  │
               ┌──────────────────┼─────────────────────┐
               │                  │                     │
               ▼                  ▼                     ▼
          DEVELOPMENT             CI                PRODUCTION
-          dbt_karim            dbt_ci                   │
-              │                  │                      │
+          dbt_karim            dbt_ci                  │
+              │                  │                     │
       stg / int / marts   stg / int / marts     ┌──────┴──────┐
                                                 │             │
                                                 ▼             ▼
-                                   dbt_prod_technical     analytics
-                                         stg / int          marts
-                                                             │
-                                                             ▼
-                                                          Power BI
+                                      dbt_prod_technical   analytics
+                                            stg / int        marts
+                                                              │
+                                                              ▼
+                                                           Power BI
 ```
 
 
